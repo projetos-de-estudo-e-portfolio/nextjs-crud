@@ -1,3 +1,7 @@
+## NextJS, ReactJS and TypeScript with Tailwind (Masterclass #02 full project) course by Cod3r Cursos
+link to the course: https://www.youtube.com/watch?v=HJN5rX-3SDM
+___
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
