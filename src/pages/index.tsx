@@ -32,7 +32,7 @@ export default function Home() {
     setVisivel('tabela')
    }
 
-  function novoCliente(cliente: Cliente) {
+  function novoCliente() {
     setCliente(Cliente.vazio())
     setVisivel('form')
   }
