@@ -1,27 +1,13 @@
 import Cliente from "../../core/Cliente";
 import ClienteRepositorio from "../../core/ClienteRepositorio";
-import { Firestore, QueryDocumentSnapshot, SnapshotOptions } from "firebase/firestore";
+import { QueryDocumentSnapshot, SnapshotOptions } from "firebase/firestore";
+import firebaseConfig from "../config";
+import { getFirestore } from "firebase/firestore";
 
 
 
 export default class ColecaoCliente implements ClienteRepositorio {
 
-
-  #conversor = {
-    toFirestore(cliente: Cliente) {
-      return {
-        nome: cliente.nome,
-        idade: cliente.idade,
-      }
-    },
-    fromFirestore( 
-      snapshot: QueryDocumentSnapshot,
-      options: SnapshotOptions
-      ) { 
-        const dados = snapshot.data(options)
-        return new Cliente(dados.nome, dados.idade, snapshot.id)
-      }
-  }
 
   async excluir(cliente: Cliente): Promise<void> {
     return null
@@ -34,6 +20,27 @@ export default class ColecaoCliente implements ClienteRepositorio {
   }
 
 }
+
+const db = getFirestore()
+
+const clienteConverter = {
+  toFirestore(cliente: Cliente){
+    return { nome: cliente.nome, idade: cliente.idade }
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): Cliente {
+    const data = snapshot.data(options)!;
+    return new Cliente(data.nome, data.idade, snapshot.id)
+  }
+}
+
+const clienteSnap = firebase
+    .firestore()
+    .collection('clientes')
+    .withConverter(clienteConverter)
+    .doc().get()
 
 
 // class Post {
